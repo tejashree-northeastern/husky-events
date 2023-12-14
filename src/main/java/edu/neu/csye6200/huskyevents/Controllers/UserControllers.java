@@ -1,8 +1,11 @@
 package edu.neu.csye6200.huskyevents.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +26,10 @@ public class UserControllers {
     public ResponseEntity<User> Createuser(@RequestBody User user){
         return new ResponseEntity<>(userServices.createUser(user), HttpStatus.OK);
     }
-    
+
+    // Read
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> GetAllusers(){
+        return new ResponseEntity<>(userServices.getAllUsers(), HttpStatus.OK);
+    }
 }
