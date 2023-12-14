@@ -45,4 +45,10 @@ public class UserControllers {
     public ResponseEntity<User> Updateuser(@PathVariable String userID, @RequestBody User user) {
         return new ResponseEntity<>(userServices.updateUser(userID, user), HttpStatus.OK);
     }
+
+    // Delete
+    @PostMapping("/deleteUser/{userID}")
+    public ResponseEntity<String> Deleteuser(@PathVariable String userID){
+        return new ResponseEntity<>(userServices.deleteUser(userID), HttpStatus.OK);
+    }
 }
