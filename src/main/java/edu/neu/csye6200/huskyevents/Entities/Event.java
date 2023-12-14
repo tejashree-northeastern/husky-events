@@ -14,7 +14,7 @@ import lombok.Data;
 public class Event {
 
     @Id
-    String id;
+    String _id;
 
     @NonNull
     String name;
@@ -38,8 +38,8 @@ public class Event {
 
     @NonNull
     String image;
-    
+
     List<String> tags;
-    
-    List<String> attendees; 
+
+    List<String> attendees;
 }

@@ -10,7 +10,7 @@ import lombok.Data;
 public class Person {
 
     @Id
-    String id;
+    String _id;
 
     @NotNull
     String firstName;
