@@ -31,6 +31,11 @@ public class EventControllers {
         return new ResponseEntity<>(eventServices.findEvent(eventID), HttpStatus.OK);
     }
 
+    @PostMapping("/updateEvent/{eventID}")
+    public ResponseEntity<Event> UpdateEvent(@PathVariable String eventID, @RequestBody Event event){
+        return new ResponseEntity<>(eventServices.updateEvent(eventID, event), HttpStatus.OK);
+    }   
+
 } 
 
 

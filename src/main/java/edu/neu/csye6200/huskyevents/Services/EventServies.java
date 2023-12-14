@@ -29,4 +29,10 @@ public class EventServies {
         Event event = eventRepository.findById(eventID).get();
         return event;
     }
+
+    public Event updateEvent(String eventID, Event event) {
+        event.setId(eventID);
+        Event eventUpdated = eventRepository.save(event);
+        return eventUpdated;
+    }
 }
