@@ -35,6 +35,10 @@ public class UserControllers {
     }
 
     // Get User
+    @PostMapping("/updateUser/{userID}")
+    public ResponseEntity<User> Updateuser(@PathVariable String userID, @RequestBody User user){
+        return new ResponseEntity<>(userServices.updateUser(userID, user), HttpStatus.OK);
+    }
     @GetMapping("/findUser/{userID}")
     public ResponseEntity<User> Finduser(@PathVariable String userID){
         return new ResponseEntity<>(userServices.findUser(userID), HttpStatus.OK);
