@@ -26,4 +26,9 @@ public class UserServices {
         allUsers.forEach(users::add);
         return users;
     }
+
+    public User findUser(String userID) {
+        User user = userRepository.findById(userID).get();
+        return user;
+    }
 }
