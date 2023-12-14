@@ -37,4 +37,12 @@ public class UserServices {
         User userUpdated = userRepository.save(user);
         return userUpdated;
     }
+
+    public String deleteUser(String userID) {
+        userRepository.deleteById(userID);
+        if(userRepository.existsById(userID)){
+            return "User not deleted";
+        }
+        return "User deleted";
+    }
 }
