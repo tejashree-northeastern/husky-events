@@ -32,4 +32,10 @@ public class UserControllers {
     public ResponseEntity<List<User>> GetAllusers(){
         return new ResponseEntity<>(userServices.getAllUsers(), HttpStatus.OK);
     }
+
+    // Get User
+    @GetMapping("/findUser/{userID}")
+    public ResponseEntity<User> Finduser(@PathVariable String userID){
+        return new ResponseEntity<>(userServices.findUser(userID), HttpStatus.OK);
+    }
 }
