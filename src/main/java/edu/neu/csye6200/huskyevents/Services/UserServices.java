@@ -9,17 +9,32 @@ import org.springframework.stereotype.Service;
 import edu.neu.csye6200.huskyevents.Entities.User;
 import edu.neu.csye6200.huskyevents.Repositories.UserRepository;
 
-@Service
+
 public class UserServices {
+
+    // lazy singleton
+    private static UserServices userServices;     
     
+    private UserServices() {         
+    
+    }     
+    
+    public static synchronized UserServices getInstance() {         
+        if (userServices == null) {             
+        userServices = new UserServices();         
+        }         
+        return userServices;    
+    }
+
     @Autowired
     UserRepository userRepository;
 
     public User createUser(User user) {
         User userSaved = userRepository.save(user);
         return userSaved;
+     
     }
-
+    
     public List<User> getAllUsers() {
         Iterable<User> allUsers = userRepository.findAll();
         List<User> users = new ArrayList<>();
@@ -27,11 +42,11 @@ public class UserServices {
         return users;
     }
 
-    public User findUser(String userID) {
+    public  User findUser(String userID) { 
         User user = userRepository.findById(userID).get();
         return user;
     }
-    
+
     public User updateUser(String userID, User user) {
         user.setId(userID);
         User userUpdated = userRepository.save(user);
