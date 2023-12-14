@@ -12,20 +12,7 @@ import lombok.Data;
  
 @Data
 @Document(collection = "users")
-public class User {
- 
-    @Id
-    String id;
- 
-    @NotNull
-    String firstName;
- 
-    @NotNull
-    String lastName;
- 
-    @NotNull
-    @Indexed(unique = true)
-    String email;
+public class User extends Person{
  
     @NotNull
     String password;
