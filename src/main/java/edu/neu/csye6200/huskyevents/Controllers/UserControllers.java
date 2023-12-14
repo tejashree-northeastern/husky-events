@@ -24,19 +24,25 @@ public class UserControllers {
 
     // Create
     @PostMapping("/createUser")
-    public ResponseEntity<User> Createuser(@RequestBody User user){
+    public ResponseEntity<User> Createuser(@RequestBody User user) {
         return new ResponseEntity<>(userServices.createUser(user), HttpStatus.OK);
     }
 
     // Read
     @GetMapping("/getAllUsers")
-    public ResponseEntity<List<User>> GetAllusers(){
+    public ResponseEntity<List<User>> GetAllusers() {
         return new ResponseEntity<>(userServices.getAllUsers(), HttpStatus.OK);
     }
 
     // Get User
     @GetMapping("/findUser/{userID}")
-    public ResponseEntity<User> Finduser(@PathVariable String userID){
+    public ResponseEntity<User> Finduser(@PathVariable String userID) {
         return new ResponseEntity<>(userServices.findUser(userID), HttpStatus.OK);
+    }
+
+    // Update
+    @PostMapping("/updateUser/{userID}")
+    public ResponseEntity<User> Updateuser(@PathVariable String userID, @RequestBody User user) {
+        return new ResponseEntity<>(userServices.updateUser(userID, user), HttpStatus.OK);
     }
 }
