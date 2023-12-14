@@ -31,6 +31,7 @@ public class UserServices {
         User user = userRepository.findById(userID).get();
         return user;
     }
+    
     public User updateUser(String userID, User user) {
         user.setId(userID);
         User userUpdated = userRepository.save(user);
