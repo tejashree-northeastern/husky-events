@@ -28,8 +28,19 @@ public class EventServies {
         User user = userRepository.findById(event.getOrganizer()).get();
         Event eventSaved = eventRepository.save(event);
         user.getYourEvents()
-            .add(eventSaved.getId());
+                .add(eventSaved.getId());
         userRepository.save(user);
         return eventSaved;
+    }
+
+    public Event findEvent(String eventID) {
+        Event event = eventRepository.findById(eventID).get();
+        return event;
+    }
+
+    public Event updateEvent(String eventID, Event event) {
+        event.setId(eventID);
+        Event eventUpdated = eventRepository.save(event);
+        return eventUpdated;
     }
 }
