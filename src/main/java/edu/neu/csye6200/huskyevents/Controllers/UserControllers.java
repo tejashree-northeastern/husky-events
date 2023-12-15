@@ -16,7 +16,7 @@ import edu.neu.csye6200.huskyevents.Entities.User;
 import edu.neu.csye6200.huskyevents.Services.UserServices;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserControllers {
 
     @Autowired
@@ -29,7 +29,7 @@ public class UserControllers {
     }
 
     // Read
-    @GetMapping("/getAllUsers")
+    @GetMapping("/getAll")
     public ResponseEntity<List<User>> GetAllusers() {
         return new ResponseEntity<>(userServices.getAllUsers(), HttpStatus.OK);
     }
