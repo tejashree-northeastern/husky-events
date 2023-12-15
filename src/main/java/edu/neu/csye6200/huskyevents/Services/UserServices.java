@@ -48,7 +48,6 @@ public class UserServices {
     }
 
     public User updateUser(String userID, User user) {
-        user.set_id(userID);
         User userUpdated = userRepository.save(user);
         return userUpdated;
     }

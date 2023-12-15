@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,19 +39,19 @@ public class UserControllers {
     }
 
     // Get User
-    @GetMapping("/findUser/{userID}")
+    @GetMapping("/get/{userID}")
     public ResponseEntity<User> Finduser(@PathVariable String userID) {
         return new ResponseEntity<>(userServices.findUser(userID), HttpStatus.OK);
     }
 
     // Update
-    @PostMapping("/updateUser/{userID}")
+    @PutMapping("/edit/{userID}")
     public ResponseEntity<User> Updateuser(@PathVariable String userID, @RequestBody User user) {
         return new ResponseEntity<>(userServices.updateUser(userID, user), HttpStatus.OK);
     }
 
     // Delete
-    @PostMapping("/deleteUser/{userID}")
+    @DeleteMapping("/delete/{userID}")
     public ResponseEntity<String> Deleteuser(@PathVariable String userID) {
         return new ResponseEntity<>(userServices.deleteUser(userID), HttpStatus.OK);
     }
