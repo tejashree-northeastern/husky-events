@@ -10,7 +10,7 @@ import edu.neu.csye6200.huskyevents.Services.UserServices;
 public class AppConfig {
        
     @Bean    
-    public EventServies eventServices() {         
+    public EventServies eventServies() {         
         return EventServies.getInstance();     
     }  
     
