@@ -32,54 +32,88 @@ public class EventServices {
     }
 
     public Event createEvent(Event event) {
-        if (userRepository.findById(event.getOrganizer()).isPresent()) {
-            User user = userRepository.findById(event.getOrganizer()).get();
-            user.getYourEvents()
-                    .add(event.get_id());
-            userRepository.save(user);
+        try {
+            if (userRepository.findById(event.getOrganizer()).isPresent()) {
+                User user = userRepository.findById(event.getOrganizer()).get();
+                user.getYourEvents()
+                        .add(event.get_id());
+                userRepository.save(user);
+            }
+            return eventRepository.save(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error creating event: " + e.getMessage());
         }
-        return eventRepository.save(event);
+
     }
 
     public Event findEvent(String eventID) {
-        if (eventRepository.findById(eventID).isPresent()) {
-            return eventRepository.findById(eventID).get();
+        try {
+            if (eventRepository.findById(eventID).isPresent()) {
+                return eventRepository.findById(eventID).get();
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error finding event: " + e.getMessage());
         }
-        return null;
+
     }
 
     public List<Event> getAllEvents() {
-        Iterable<Event> allEvents = eventRepository.findAll();
-        List<Event> events = new ArrayList<>();
-        allEvents.forEach(events::add);
-        return events;
+        try {
+            Iterable<Event> allEvents = eventRepository.findAll();
+            List<Event> events = new ArrayList<>();
+            allEvents.forEach(events::add);
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error getting all events: " + e.getMessage());
+        }
     }
 
     public Event updateEvent(String eventID, Event event) {
-        event.set_id(eventID);
-        return eventRepository.save(event);
+        try {
+            event.set_id(eventID);
+            return eventRepository.save(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating event: " + e.getMessage());
+        }
+
     }
 
     public List<String> getRegisteredUserNames(String _id) {
-
-        if(eventRepository.findById(_id).isEmpty()){
-            return null;
+        try {
+            if (eventRepository.findById(_id).isEmpty()) {
+                return null;
+            }
+            Event event = eventRepository.findById(_id).get();
+            List<String> registeredUserNames = new ArrayList<>();
+            event.getAttendees().forEach(attendee -> {
+                User user = userRepository.findById(attendee).get();
+                registeredUserNames.add(user.getFirstName() + " " + user.getLastName());
+            });
+            return registeredUserNames;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error getting registered user names: " + e.getMessage());
         }
-        Event event = eventRepository.findById(_id).get();
-        List<String> registeredUserNames = new ArrayList<>();
-        event.getAttendees().forEach(attendee -> {
-            User user = userRepository.findById(attendee).get();
-            registeredUserNames.add(user.getFirstName() + " " + user.getLastName());
-        });
-        return registeredUserNames;
+
     }
 
     public String deleteEvent(String eventID) {
-        eventRepository.deleteById(eventID);
+        try {
+            eventRepository.deleteById(eventID);
 
-        if (eventRepository.existsById(eventID)) {
-            return "Event not deleted";
+            if (eventRepository.existsById(eventID)) {
+                return "Event not deleted";
+            }
+            return "Event deleted";
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting event: " + e.getMessage());
         }
-        return "Event deleted";
+
     }
 }
