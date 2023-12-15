@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.neu.csye6200.huskyevents.Entities.Event;
-import edu.neu.csye6200.huskyevents.Entities.User;
-import edu.neu.csye6200.huskyevents.Services.EventServies;
+import edu.neu.csye6200.huskyevents.Services.EventServices;
 
 @RestController
 @CrossOrigin
@@ -26,7 +25,7 @@ import edu.neu.csye6200.huskyevents.Services.EventServies;
 public class EventControllers {
 
     @Autowired
-    EventServies eventServices;
+    EventServices eventServices;
 
     // Create
     @PostMapping("/create")

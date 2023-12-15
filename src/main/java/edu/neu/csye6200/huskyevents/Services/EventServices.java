@@ -10,7 +10,11 @@ import edu.neu.csye6200.huskyevents.Entities.User;
 import edu.neu.csye6200.huskyevents.Repositories.EventRepository;
 import edu.neu.csye6200.huskyevents.Repositories.UserRepository;
 
-public class EventServies {
+
+/**
+ * EventServices
+ */
+public class EventServices {
     @Autowired
     EventRepository eventRepository;
 
@@ -18,27 +22,30 @@ public class EventServies {
     UserRepository userRepository;
 
     // eager singleton
-    private static final EventServies eventServices = new EventServies();
+    private static final EventServices eventServices = new EventServices();
 
-    private EventServies() {
+    private EventServices() {
     }
 
-    public static EventServies getInstance() {
+    public static EventServices getInstance() {
         return eventServices;
     }
 
     public Event createEvent(Event event) {
-        User user = userRepository.findById(event.getOrganizer()).get();
-        Event eventSaved = eventRepository.save(event);
-        user.getYourEvents()
-                .add(eventSaved.get_id());
-        userRepository.save(user);
-        return eventSaved;
+        if (userRepository.findById(event.getOrganizer()).isPresent()) {
+            User user = userRepository.findById(event.getOrganizer()).get();
+            user.getYourEvents()
+                    .add(event.get_id());
+            userRepository.save(user);
+        }
+        return eventRepository.save(event);
     }
 
     public Event findEvent(String eventID) {
-        Event event = eventRepository.findById(eventID).get();
-        return event;
+        if (eventRepository.findById(eventID).isPresent()) {
+            return eventRepository.findById(eventID).get();
+        }
+        return null;
     }
 
     public List<Event> getAllEvents() {
@@ -50,11 +57,14 @@ public class EventServies {
 
     public Event updateEvent(String eventID, Event event) {
         event.set_id(eventID);
-        Event eventUpdated = eventRepository.save(event);
-        return eventUpdated;
+        return eventRepository.save(event);
     }
 
     public List<String> getRegisteredUserNames(String _id) {
+
+        if(eventRepository.findById(_id).isEmpty()){
+            return null;
+        }
         Event event = eventRepository.findById(_id).get();
         List<String> registeredUserNames = new ArrayList<>();
         event.getAttendees().forEach(attendee -> {
@@ -66,8 +76,8 @@ public class EventServies {
 
     public String deleteEvent(String eventID) {
         eventRepository.deleteById(eventID);
-        
-        if(eventRepository.existsById(eventID)){
+
+        if (eventRepository.existsById(eventID)) {
             return "Event not deleted";
         }
         return "Event deleted";
