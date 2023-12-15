@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import edu.neu.csye6200.huskyevents.Entities.User;
 import edu.neu.csye6200.huskyevents.Services.UserServices;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserControllers {
 
@@ -48,7 +50,7 @@ public class UserControllers {
 
     // Delete
     @PostMapping("/deleteUser/{userID}")
-    public ResponseEntity<String> Deleteuser(@PathVariable String userID){
+    public ResponseEntity<String> Deleteuser(@PathVariable String userID) {
         return new ResponseEntity<>(userServices.deleteUser(userID), HttpStatus.OK);
     }
 }

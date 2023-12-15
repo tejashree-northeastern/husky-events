@@ -1,5 +1,8 @@
 package edu.neu.csye6200.huskyevents.Services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.neu.csye6200.huskyevents.Entities.Event;
@@ -28,7 +31,7 @@ public class EventServies {
         User user = userRepository.findById(event.getOrganizer()).get();
         Event eventSaved = eventRepository.save(event);
         user.getYourEvents()
-                .add(eventSaved.getId());
+                .add(eventSaved.get_id());
         userRepository.save(user);
         return eventSaved;
     }
@@ -38,8 +41,15 @@ public class EventServies {
         return event;
     }
 
+    public List<Event> getAllEvents() {
+        Iterable<Event> allEvents = eventRepository.findAll();
+        List<Event> events = new ArrayList<>();
+        allEvents.forEach(events::add);
+        return events;
+    }
+
     public Event updateEvent(String eventID, Event event) {
-        event.setId(eventID);
+        event.set_id(eventID);
         Event eventUpdated = eventRepository.save(event);
         return eventUpdated;
     }
