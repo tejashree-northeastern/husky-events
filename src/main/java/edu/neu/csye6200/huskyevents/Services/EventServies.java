@@ -53,4 +53,23 @@ public class EventServies {
         Event eventUpdated = eventRepository.save(event);
         return eventUpdated;
     }
+
+    public List<String> getRegisteredUserNames(String _id) {
+        Event event = eventRepository.findById(_id).get();
+        List<String> registeredUserNames = new ArrayList<>();
+        event.getAttendees().forEach(attendee -> {
+            User user = userRepository.findById(attendee).get();
+            registeredUserNames.add(user.getFirstName() + " " + user.getLastName());
+        });
+        return registeredUserNames;
+    }
+
+    public String deleteEvent(String eventID) {
+        eventRepository.deleteById(eventID);
+        
+        if(eventRepository.existsById(eventID)){
+            return "Event not deleted";
+        }
+        return "Event deleted";
+    }
 }
