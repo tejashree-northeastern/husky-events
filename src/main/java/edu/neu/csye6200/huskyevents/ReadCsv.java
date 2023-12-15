@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadCsv{
+public class ReadCsv {
 
-    public void demo(){
+    public void demo() {
         String filePath = "src/main/java/edu/neu/csye6200/huskyevents/Data/teammates.txt";
 
         // Read the CSV file into a string
@@ -18,17 +18,22 @@ public class ReadCsv{
 
         // Iterate over the rows and print the values
         for (String row : csvContent) {
-            String[] values = row.split(",");
-            persons.add(PersonItemFactory.getInstance().createPerson(values));
+            try {
+                String[] values = row.split(",");
+                persons.add(PersonItemFactory.getInstance().createPerson(values));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error creating person: " + e.getMessage());
+            }
+
         }
 
         System.out.println("------------------------------------------------------------------");
-        System.out.println("Husky Events:\n"+"Developed By\n");
+        System.out.println("Husky Events:\n" + "Developed By\n");
         // Sort the persons using stream, comparable and lambda
         persons.stream().sorted().forEach(System.out::println);
         System.out.println("------------------------------------------------------------------");
 
-
     }
-    
+
 }

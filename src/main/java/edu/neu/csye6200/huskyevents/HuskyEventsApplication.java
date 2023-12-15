@@ -8,9 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HuskyEventsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HuskyEventsApplication.class, args);
-		ReadCsv readCsv = new ReadCsv();
-		readCsv.demo();
+		try {
+            SpringApplication.run(HuskyEventsApplication.class, args);
+            ReadCsv readCsv = new ReadCsv();
+            readCsv.demo();
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            System.exit(1); 
+        }
 	}
 
 }

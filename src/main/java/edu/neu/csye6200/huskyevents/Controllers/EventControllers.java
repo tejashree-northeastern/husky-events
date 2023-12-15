@@ -30,32 +30,56 @@ public class EventControllers {
     // Create
     @PostMapping("/create")
     public ResponseEntity<Event> CreateEvent(@RequestBody Event event) {
-        return new ResponseEntity<>(eventServices.createEvent(event), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventServices.createEvent(event), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/getevent")
     public ResponseEntity<Event> FindEvent(@RequestParam(name = "_id") String _id) {
-        return new ResponseEntity<>(eventServices.findEvent(_id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventServices.findEvent(_id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/edit/{eventID}")
     public ResponseEntity<Event> UpdateEvent(@PathVariable String eventID, @RequestBody Event event) {
-        return new ResponseEntity<>(eventServices.updateEvent(eventID, event), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventServices.updateEvent(eventID, event), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/events")
     public ResponseEntity<List<Event>> GetAllEvents() {
-        return new ResponseEntity<>(eventServices.getAllEvents(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventServices.getAllEvents(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> GetAllEvents(@RequestParam(name = "_id") String _id) {
-        return new ResponseEntity<>(eventServices.deleteEvent(_id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventServices.deleteEvent(_id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/getregisteredusernames")
     public ResponseEntity<List<String>> GetRegisteredUserNames(@RequestParam(name = "eventID") String _id) {
-        return new ResponseEntity<>(eventServices.getRegisteredUserNames(_id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(eventServices.getRegisteredUserNames(_id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
